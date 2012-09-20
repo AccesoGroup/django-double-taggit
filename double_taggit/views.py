@@ -38,12 +38,8 @@ def tag_list_view(request):
     app_label, model_class = settings.TAGGIT_AUTOCOMPLETE_TAG_MODEL.split('.')
     Tag = cache.get_model(app_label, model_class)
     try:
-        tags = Tag.objects.all().values_list('slug', flat=True) #TODO: add filtering
-        #tags = Tag.objects.filter(name__istartswith=request.GET['q']).values_list('name', flat=True)
+        tags = Tag.objects.all().values_list('name', flat=True) #TODO: add filtering
     except MultiValueDictKeyError:
         tags = []
-    #return HttpResponse(tags, mimetype='tex/plain')
-    #return HttpResponse(simplejson.dumps(tags), mimetype='text/plain')
     return HttpResponse(simplejson.dumps(list(tags)), mimetype='application/json')
-    #return HttpResponse('\n'.join(tags), mimetype='text/plain')
 
